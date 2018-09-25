@@ -39,6 +39,7 @@ FusionEKF::FusionEKF() {
   H_laser_ << 1, 0, 0, 0,
               0, 1, 0, 0;
 
+  //initializing w/ some values, though this won't really be used
   Hj_ << 1, 1, 0, 0,
          1, 1, 0, 0,
          1, 1, 1, 1; 
@@ -93,9 +94,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       float phi = measurement_pack.raw_measurements_(1);
       float ro_dot = measurement_pack.raw_measurements_(2);
       ekf_.x_(0) = ro * cos(phi);
-      ekf_.x_(1) = ro * sin(phi);      
-      // ekf_.x_(2) = ro_dot * cos(phi);
-      // ekf_.x_(3) = ro_dot * sin(phi);
+      ekf_.x_(1) = ro * sin(phi);
 
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
