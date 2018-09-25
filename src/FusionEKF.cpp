@@ -39,11 +39,6 @@ FusionEKF::FusionEKF() {
   H_laser_ << 1, 0, 0, 0,
               0, 1, 0, 0;
 
-  //initializing w/ some values, though this won't really be used
-  Hj_ << 1, 1, 0, 0,
-         1, 1, 0, 0,
-         1, 1, 1, 1; 
-
   //the initial transition matrix F_
   ekf_.F_ = MatrixXd(4, 4);
   ekf_.F_ << 1, 0, 1, 0,
@@ -92,7 +87,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       */
       float ro = measurement_pack.raw_measurements_(0);
       float phi = measurement_pack.raw_measurements_(1);
-      float ro_dot = measurement_pack.raw_measurements_(2);
+      // float ro_dot = measurement_pack.raw_measurements_(2);
+      // only updating px and py, not enough information to update vx, vy
       ekf_.x_(0) = ro * cos(phi);
       ekf_.x_(1) = ro * sin(phi);
 
